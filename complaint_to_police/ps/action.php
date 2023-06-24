@@ -1,0 +1,301 @@
+<?php 
+require '../common/connection.php';
+if (!isset($_GET['id'])) {
+  header('location:ps_dash.php');
+  exit();
+}
+$id=$_GET['id'];
+$select="select * from complent_tbl where ID=$id and ISACTIVE=1";
+$query=mysqli_query($conn,$select);
+if ($query) {
+   $row=mysqli_fetch_assoc($query);
+   $uid=$row['USER_ID'];
+}
+else{
+  echo "Error";
+}
+
+$select1="select * from user_tbl where ID=$uid and ISACTIVE=1";
+$query1=mysqli_query($conn,$select1);
+if ($query1) {
+  //echo "selected";
+  $row1=mysqli_fetch_assoc($query1);
+}
+else{
+  echo "Error";
+}
+  
+  $select2="select * from action_tbl where ISACTIVE=1";
+  $query2=mysqli_query($conn,$select2)
+ ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from sbtechnosoft.com/barrister/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Mar 2020 10:56:25 GMT -->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>action</title>
+<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="assets/linearicons/css/icon-font.min.css" rel="stylesheet">
+<link href="assets/css/magnific-popup.css" rel="stylesheet">
+<link href="assets/animate/animate.css" rel="stylesheet">
+<link href="assets/owl-carousel/css/owl.carousel.css" rel="stylesheet">
+<link href="assets/owl-carousel/css/owl.theme.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+
+<div id="dvLoading"></div>
+<header class="wow fadeInDown" data-offset-top="197" data-spy=  "affix">
+  <div class="logo-wrapper"> 
+    <div class="container">
+      <div class="row"> 
+        <div class="col-sm-6 col-md-2 col-lg-2 hidden-xs"> <a href="index-2.html"><img src="images/Komal.png" width="255" height="55"></a> </div>
+        
+        <div class="col-sm-12 col-md-10 col-lg-10">
+          <nav class="navbar navbar-default pull-right"> 
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+              <a class="navbar-brand" href="index-2.html"><img src="images/logo.png" alt="Barrister"/></a> </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class=""><a href="ps_dash.php">Home</a></li>
+                
+                <!-- <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                  </ul>
+                </li> -->
+                 <li><a href="view_post.php">Post</a></li>
+                <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">News<span class="caret"></span></a>
+                 
+                  <ul class="dropdown-menu">
+                    <li><a href="view_news.php">NEWS</a></li>
+                    <li><a href="my_news.php">MY NEWS</a></li>
+                    <li><a href="news_add.php">ADD NEWS</a></li>
+                  </ul>
+                </li>
+                 <li class="active"><a href="view_complent.php">complent</a></li>
+                <li><a href="contect_us.php">Contact Us</a></li>
+                <li><a href="about_us.php">About Us</a></li>
+                <li><a href="view_profile.php" >Account</a></li>
+                <li><a href="logout.php" >Logout</a></li>
+
+               <!--  <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registration <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="policestation-registration.html">Police Station Registration</a></li>
+                    <li><a href="user-registration.html">User Registration</a></li>
+                  </ul> 
+                </li> -->
+                
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Header End --> 
+<!-- Breadcrumb Wrapper Start -->
+<div class="breadcrumb-wrapper">
+  <div class="container">
+    <div class="breadcrumb-text">
+      <center>
+      <h1>Action for Complaint</h1>
+      </center>
+      <div class="inner-breadcrumb">
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Breadcrumb Wrapper End --> 
+<!-- Barrister Inner page Wrapper Start -->
+<div class="inner-page-wrapper blog-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-8 col-xs-12"> 
+       
+       <div class="contact-form sidebar-widget last">
+          <div class="main-title-2">
+         
+          </div>
+          <form id="contact_form" action="actionPro.php" method="POST">
+            <input type="hidden" name="uid" value="<?php echo $row1['ID']; ?>">
+            <input type="hidden" name="comp_id" value="<?php echo $row['ID']; ?>">
+            <input type="hidden" name="comp_cat_id" value="<?php echo$row['COMPLENT_CATEGORY_ID']; ?>">
+            <input type="hidden" name="u_email" value="<?php echo$row1['EMAIL']; ?>">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group fullname">
+                  First Name
+                  <input name="txt_fn" class="input-text"  type="text" 
+                   value="<?php echo$row1['FIRST_NAME']; ?>" disabled>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group fullname">
+                  Last Name
+                  <input name="txt_fn" class="input-text"  type="text" 
+                   value="<?php echo$row1['LAST_NAME']; ?>" disabled>
+                </div>
+              </div>
+                <div class="col-sm-12">
+                  Complaint
+                <div class="form-group subject">
+                  <input name="subject" class="input-text"  type="text"
+                   value="<?php echo $row['COMPLENT_DISCRIPTION']; ?>" disabled>
+                </div>
+              </div>
+               <div class="col-sm-12">
+                  Address
+                <div class="form-group subject">
+                  <input name="subject" class="input-text"  type="text"
+                   value="<?php echo $row1['ADDRESS']; ?>" disabled>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                Action
+                <div class="form-group message">
+                  <textarea class="input-text" name="txt_dis" placeholder="Write Action"></textarea>
+                </div>
+              </div>
+              <div class="col-sm-5 col-md-5 col-lg-4">
+                <div class="form-group send-btn">
+                  <button type="submit" class="btn-one" name="btn_sb">Send Message</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Comments section start -->
+        <div class="comments-section sidebar-widget"> 
+          <!-- Main Title 2 -->
+          <h2>Actions</h2>
+          <ul class="comments">
+            <?php 
+             if (mysqli_num_rows($query2)>0) {
+               while ($row2=mysqli_fetch_assoc($query2)) {
+               
+             ?>
+            <li>
+              <div class="comment">
+               
+                <div class="comment-content">
+                  <div class="comment-meta">
+                    <div class="comment-meta-reply"> <a href="action_delete.php?id=<?php echo $row2['ID']; ?>">Delete</a> </div>
+                    <div class="comment-meta-date"> <span class="hidden-xs"><?php echo $row2['DOI']; ?></span> </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="comment-body">
+                    <div class="comment-rating"></div>
+                    <p><?php echo $row2['ACTION_DESCRIPTION']; ?></p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <?php 
+              }
+             }
+             ?>
+            <!-- <li>
+              <div class="comment">
+                <div class="comment-author"> <a href="#"> <img src="images/blog2.jpg" alt=""> </a> </div>
+                <div class="comment-content">
+                  <div class="comment-meta">
+                    <div class="comment-meta-author"> Jane Doe </div>
+                    <div class="comment-meta-reply"> <a href="#">Reply</a> </div>
+                    <div class="comment-meta-date"> <span class="hidden-xs">8:42 PM 3/3/2017</span> </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="comment-body">
+                    <div class="comment-rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer </p>
+                  </div>
+                </div>
+              </div>
+              <ul>
+                <li>
+                  <div class="comment comment-mrg-bdr-nane">
+                    <div class="comment-author"> <a href="#"> <img src="images/blog3.jpg" alt=""> </a> </div>
+                    <div class="comment-content">
+                      <div class="comment-meta">
+                        <div class="comment-meta-author"> Jane Doe </div>
+                        <div class="comment-meta-reply"> <a href="#">Reply</a> </div>
+                        <div class="comment-meta-date"> <span class="hidden-xs">8:42 PM 3/3/2017</span> </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="comment-body">
+                        <div class="comment-rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i> </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et vel eros. Maecenas eros enim, tincidunt vel turpis vel, dapibus tempus nulla. Donec vel nulla dui.</p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li> -->
+          </ul>
+        </div>
+        <!-- Comments section end --> 
+        
+        <!-- Contact form start -->
+        
+        <!-- Contact form end --> 
+      </div>
+     
+    </div>
+  </div>
+</div>
+<!-- Basrrister Inner page Wrapper End --> 
+<!-- Barrister Footer Wrapper Start -->
+<div class="footer-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-md-4"> <img src="images/Komal.png" alt="" data-popupalt-original-title="null" title="">
+        <p>For this website is to provide for all person to complain against for any crime.It is very better performance for users to complaint for crime at any place.With the help of this software people can submit their complaint in the police station.</p>
+       
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="bullet-section">
+          <h2><img src="images/link-icon.png">RESEARCH LINKS</h2>
+          
+          <ul>
+            <li><a href="about_us.php">ABOUT US</a></li>
+            <li><a href="contect_us.php">CONTACT US</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <div class="form-section">
+            <img src="images/callout-img3.jpg">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Barrister Footer Wrapper end --> 
+<!-- Barrister Footer Wrapper end --> 
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="assets/jquery/jquery-3.1.1.min.js"></script> 
+<script src="assets/jquery/jquery.animateNumber.min.js"></script> 
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="assets/bootstrap/js/bootstrap.min.js"></script> 
+<script src="assets/jquery/plugins.js"></script> 
+<script src="assets/jquery/popup.js"></script> 
+<script src="assets/jquery/slider.js"></script> 
+<script src="assets/owl-carousel/js/owl.carousel.js"></script> 
+<script src="assets/jquery/jquery.magnific-popup.min.js"></script> 
+<script src="assets/wow/wow.min.js"></script> 
+<script src="js/custom.js"></script>
+</body>
+
+<!-- Mirrored from sbtechnosoft.com/barrister/blog-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Mar 2020 11:07:48 GMT -->
+</html>
